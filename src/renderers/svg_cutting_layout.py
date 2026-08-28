@@ -112,24 +112,13 @@ def render_nesting_layout_to_svg(
         cx = tx(p.placed_x + p.width / 2.0)
         cy = ty(p.placed_y + p.height / 2.0)
 
-        # 1. Numbered Badge (Circle)
+        # Single Clean Numbered Badge (Circle) centered on piece — No floating text labels!
         badge_bg = "#d97706" if p.is_optional else "#2563eb"
         svg_parts.append(
-            f'<circle cx="{cx:.1f}" cy="{cy - 6:.1f}" r="11" fill="{badge_bg}" stroke="#ffffff" stroke-width="2" />'
+            f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="11" fill="{badge_bg}" stroke="#ffffff" stroke-width="2" />'
         )
         svg_parts.append(
-            f'<text x="{cx:.1f}" y="{cy - 2:.1f}" font-size="11" font-family="sans-serif" font-weight="800" fill="#ffffff" text-anchor="middle">{callout_num}</text>'
-        )
-
-        # 2. Compact Dimension Pill beneath badge
-        rot_str = f" ({p.rotation_deg:.0f}°)" if p.rotation_deg != 0 else ""
-        dim_lbl = f'{p.width:.1f}"×{p.height:.1f}"{rot_str}'
-        pill_w = len(dim_lbl) * 5.8 + 12
-        svg_parts.append(
-            f'<rect x="{cx - pill_w/2:.1f}" y="{cy + 8:.1f}" width="{pill_w:.1f}" height="14" rx="3" fill="#ffffff" fill-opacity="0.9" stroke="#cbd5e1" stroke-width="0.5"/>'
-        )
-        svg_parts.append(
-            f'<text x="{cx:.1f}" y="{cy + 18:.1f}" font-size="8.5" font-family="sans-serif" font-weight="600" fill="#475569" text-anchor="middle">{dim_lbl}</text>'
+            f'<text x="{cx:.1f}" y="{cy + 4:.1f}" font-size="11" font-family="sans-serif" font-weight="800" fill="#ffffff" text-anchor="middle">{callout_num}</text>'
         )
 
     # ----------------------------------------------------

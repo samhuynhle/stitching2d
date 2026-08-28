@@ -243,10 +243,8 @@ async function loadNestingView() {
   const statsContainer = document.getElementById('nestingStats');
 
   try {
-    if (!nestingDataCache) {
-      const res = await fetch(`/api/projects/${currentProjectId}/nesting`);
-      nestingDataCache = await res.json();
-    }
+    const res = await fetch(`/api/projects/${currentProjectId}/nesting?t=${Date.now()}`);
+    nestingDataCache = await res.json();
 
     fabricSelect.innerHTML = '';
     const fabKeys = Object.keys(nestingDataCache);

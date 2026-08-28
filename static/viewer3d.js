@@ -481,28 +481,73 @@ function buildChalkBucket3D(project, group) {
     rearMesh.userData = { pieceId: "rear_mesh_pocket" };
     group.add(rearMesh);
 
-    // 7. SIDE GUSSET ATTACHMENTS (Left: Brush Loops; Right: D-Ring)
-    const brushSleeve1 = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 1.8, 12), webbingMat);
-    brushSleeve1.position.set(-halfBW + 0.4, 5.0, 1.2);
+    // 7. SIDE GUSSET ATTACHMENTS
+    // Left: Top Carabiner Anchor Loop + Dual Elastic Sleeves + Lower Magnetic Docks + Brushes
+    // Right: 0.75in D-Ring Key Loop
+
+    // A. Top Carabiner / S-Biner Clip Loop (Left Gusset @ y = 9.0)
+    const clipLoopGeo = new THREE.TorusGeometry(0.4, 0.08, 8, 16, Math.PI);
+    const clipLoopMesh = new THREE.Mesh(clipLoopGeo, dRingMat);
+    clipLoopMesh.position.set(-halfBW + 0.3, 9.0, 0);
+    clipLoopMesh.rotation.y = -Math.PI / 2;
+    clipLoopMesh.userData = { pieceId: "ext_side_gusset_left" };
+    group.add(clipLoopMesh);
+
+    // B. Upper Silicone-Gripper Elastic Sleeves (Left Gusset @ y = 6.0)
+    const brushSleeve1 = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 1.8, 12), webbingMat);
+    brushSleeve1.position.set(-halfBW + 0.35, 6.0, 1.2);
     brushSleeve1.userData = { pieceId: "ext_side_gusset_left" };
     group.add(brushSleeve1);
 
     const brushSleeve2 = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 2.0, 12), webbingMat);
-    brushSleeve2.position.set(-halfBW + 0.4, 5.0, -1.2);
+    brushSleeve2.position.set(-halfBW + 0.35, 6.0, -1.2);
     brushSleeve2.userData = { pieceId: "ext_side_gusset_left" };
     group.add(brushSleeve2);
 
+    // C. Lower Embedded N52 Magnetic Docks (Left Gusset @ y = 3.0)
+    for (let zPos of [1.2, -1.2]) {
+      const bDockGeo = new THREE.CylinderGeometry(0.28, 0.28, 0.08, 16);
+      bDockGeo.rotateZ(Math.PI / 2);
+      const bDock = new THREE.Mesh(bDockGeo, magnetMat);
+      bDock.position.set(-halfBW + 0.3, 3.0, zPos);
+      bDock.userData = { pieceId: "ext_side_gusset_left" };
+      group.add(bDock);
+    }
+
+    // D. Detailing Boar's Hair Brush (Small)
     const brushWoodMat = new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.6 });
     const brushBristleMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.9 });
-    const brushHandle = new THREE.Mesh(new THREE.BoxGeometry(0.4, 6.5, 0.25), brushWoodMat);
-    brushHandle.position.set(-halfBW + 0.4, 7.5, 1.2);
-    brushHandle.rotation.z = -0.05;
-    group.add(brushHandle);
+    const brushSteelTailMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.95, roughness: 0.2 });
 
-    const brushHead = new THREE.Mesh(new THREE.BoxGeometry(0.6, 1.8, 0.45), brushBristleMat);
-    brushHead.position.set(-halfBW + 0.4, 10.2, 1.2);
-    group.add(brushHead);
+    // Brush 1 (Small Boar's Hair)
+    const brushHandle1 = new THREE.Mesh(new THREE.BoxGeometry(0.35, 6.8, 0.22), brushWoodMat);
+    brushHandle1.position.set(-halfBW + 0.35, 6.5, 1.2);
+    brushHandle1.rotation.z = -0.04;
+    group.add(brushHandle1);
 
+    const brushTail1 = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.4, 12), brushSteelTailMat);
+    brushTail1.position.set(-halfBW + 0.35, 3.2, 1.2);
+    group.add(brushTail1);
+
+    const brushHead1 = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.8, 0.4), brushBristleMat);
+    brushHead1.position.set(-halfBW + 0.35, 9.8, 1.2);
+    group.add(brushHead1);
+
+    // Brush 2 (Large Boulder Crimp Brush)
+    const brushHandle2 = new THREE.Mesh(new THREE.BoxGeometry(0.5, 7.5, 0.3), brushWoodMat);
+    brushHandle2.position.set(-halfBW + 0.35, 6.8, -1.2);
+    brushHandle2.rotation.z = -0.04;
+    group.add(brushHandle2);
+
+    const brushTail2 = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 0.5, 12), brushSteelTailMat);
+    brushTail2.position.set(-halfBW + 0.35, 3.2, -1.2);
+    group.add(brushTail2);
+
+    const brushHead2 = new THREE.Mesh(new THREE.BoxGeometry(0.75, 2.2, 0.55), brushBristleMat);
+    brushHead2.position.set(-halfBW + 0.35, 10.4, -1.2);
+    group.add(brushHead2);
+
+    // E. Right Gusset D-Ring Key Clip Loop
     const dRingGeo = new THREE.TorusGeometry(0.55, 0.1, 8, 16, Math.PI);
     const dRingMesh = new THREE.Mesh(dRingGeo, dRingMat);
     dRingMesh.position.set(halfBW - 0.2, 8.5, 0);

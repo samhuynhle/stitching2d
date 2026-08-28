@@ -404,7 +404,7 @@ function buildChalkBucket3D(project, group) {
     const pD = 1.0;
     const pocketGeo = new THREE.BoxGeometry(pW, pH, pD);
     const pocketMesh = new THREE.Mesh(pocketGeo, xpacMat.clone());
-    pocketMesh.position.set(0, 3.5, halfBD - 0.2);
+    pocketMesh.position.set(0, 4.5, halfBD - 0.2);
     pocketMesh.userData = { pieceId: "front_3d_pocket" };
     pocketMesh.castShadow = true;
     group.add(pocketMesh);
@@ -412,14 +412,47 @@ function buildChalkBucket3D(project, group) {
     // Pocket Flap
     const flapGeo = new THREE.BoxGeometry(pW + 0.2, 1.2, pD + 0.15);
     const flapMesh = new THREE.Mesh(flapGeo, xpacMat.clone());
-    flapMesh.position.set(0, 5.5, halfBD - 0.15);
+    flapMesh.position.set(0, 6.5, halfBD - 0.15);
     flapMesh.userData = { pieceId: "front_pocket_flap" };
     group.add(flapMesh);
 
-    // 6. REAR MESH POCKET
+    // 6. 1-INCH BOTTOM BASEMENT STASH COMPARTMENT & UPWARD MAGNETIC FLAP
+    // Internal Shelf Divider (Separates upper chalk bowl from lower stash)
+    const shelfGeo = new THREE.PlaneGeometry(baseW, baseD);
+    const shelfMesh = new THREE.Mesh(shelfGeo, createCorduraMat());
+    shelfMesh.rotation.x = -Math.PI / 2;
+    shelfMesh.position.set(0, 1.0, 0);
+    shelfMesh.userData = { pieceId: "basement_divider_shelf" };
+    group.add(shelfMesh);
+
+    // Front Upward-Folding Magnetic Storm Flap (1in rise from bottom)
+    const bFlapGeo = new THREE.BoxGeometry(baseW, 1.1, 0.18);
+    const bFlapMesh = new THREE.Mesh(bFlapGeo, createCorduraMat());
+    bFlapMesh.position.set(0, 0.55, halfBD + 0.08);
+    bFlapMesh.userData = { pieceId: "basement_floor_panel" };
+    group.add(bFlapMesh);
+
+    // 3x N52 Basement Magnets on Flap
+    for (let xPos of [-3.5, 0.0, 3.5]) {
+      const bMagGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.1, 16);
+      bMagGeo.rotateX(Math.PI / 2);
+      const bMag = new THREE.Mesh(bMagGeo, magnetMat);
+      bMag.position.set(xPos, 0.7, halfBD + 0.18);
+      bMag.userData = { pieceId: "basement_floor_panel" };
+      group.add(bMag);
+    }
+
+    // Basement Flap Quick-Pull Tab
+    const bTabGeo = new THREE.BoxGeometry(0.75, 0.6, 0.1);
+    const bTab = new THREE.Mesh(bTabGeo, webbingMat);
+    bTab.position.set(0, 1.25, halfBD + 0.1);
+    bTab.userData = { pieceId: "basement_floor_panel" };
+    group.add(bTab);
+
+    // 7. REAR MESH POCKET
     const rearMeshGeo = new THREE.PlaneGeometry(9.0, 5.0);
     const rearMesh = new THREE.Mesh(rearMeshGeo, meshPocketMat.clone());
-    rearMesh.position.set(0, 3.5, -halfBD + 0.1);
+    rearMesh.position.set(0, 4.5, -halfBD + 0.1);
     rearMesh.userData = { pieceId: "rear_mesh_pocket" };
     group.add(rearMesh);
 

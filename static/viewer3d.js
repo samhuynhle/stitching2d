@@ -375,28 +375,45 @@ function buildChalkBucket3D(project, group) {
     }
 
     // Grab Handles & Pull Tabs
-    const handleGeo = new THREE.TorusGeometry(1.6, 0.18, 8, 24, Math.PI);
+    // Calculate exact tapered wall depth at handle height (y = height - 2.5)
+    const handleY = height - 2.5;
+    const wallZAtHandle = halfBD + (halfTD - halfBD) * (handleY / height);
+
+    const handleGeo = new THREE.TorusGeometry(1.5, 0.18, 8, 24, Math.PI);
+    
+    // Front Grab Handle (Arches outwards toward +Z)
     const handleFront = new THREE.Mesh(handleGeo, webbingMat);
-    handleFront.position.set(0, height - 2.5, halfTD + 0.5);
-    handleFront.rotation.x = Math.PI / 2;
+    handleFront.position.set(0, handleY, wallZAtHandle + 0.1);
+    handleFront.rotation.set(Math.PI / 2, 0, 0);
     handleFront.userData = { pieceId: "ext_u_panel" };
     group.add(handleFront);
 
-    const handleBack = handleFront.clone();
-    handleBack.position.set(0, height - 2.5, -halfTD - 0.5);
+    // Rear Grab Handle (Arches outwards toward -Z)
+    const handleBack = new THREE.Mesh(handleGeo, webbingMat);
+    handleBack.position.set(0, handleY, -wallZAtHandle - 0.1);
+    handleBack.rotation.set(-Math.PI / 2, 0, 0);
     handleBack.userData = { pieceId: "ext_u_panel" };
     group.add(handleBack);
 
+    // Pull Tabs at Mouth Rim
     const tabGeo = new THREE.BoxGeometry(0.75, 0.8, 0.1);
     const tabFront = new THREE.Mesh(tabGeo, webbingMat);
     tabFront.position.set(0, height + 0.3, halfTD + 0.05);
     tabFront.userData = { pieceId: "ext_u_panel" };
     group.add(tabFront);
 
-    const tabBack = tabFront.clone();
+    const tabBack = new THREE.Mesh(tabGeo, webbingMat);
     tabBack.position.set(0, height + 0.3, -halfTD - 0.05);
     tabBack.userData = { pieceId: "ext_u_panel" };
     group.add(tabBack);
+
+    // Rear Roll-Top Compression Webbing Strap (Running down back face)
+    const strapGeo = new THREE.BoxGeometry(0.8, 7.5, 0.12);
+    const strapMesh = new THREE.Mesh(strapGeo, webbingMat);
+    strapMesh.position.set(0, 6.5, -halfBD + 0.25);
+    strapMesh.rotation.x = 0.08;
+    strapMesh.userData = { pieceId: "ext_u_panel" };
+    group.add(strapMesh);
 
     // 5. FRONT 3D MAGNETIC POCKET (X-Pac VX21) — ELEVATED
     const pW = 7.5;

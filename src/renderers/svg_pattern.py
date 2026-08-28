@@ -185,35 +185,60 @@ def render_piece_to_svg(
             att = item["att"]
             ax = tx(att.position.x)
             ay = ty(att.position.y)
+            ang = att.angle_deg or 0.0
+
+            l_px = (att.length or 2.0) * scale
+            w_px = (att.width or 1.0) * scale
+
+            svg_parts.append(f'<g transform="translate({ax:.1f}, {ay:.1f}) rotate({ang:.1f})">')
 
             if att.type == AttachmentType.WEBBING:
-                w_px = (att.width or 1.0) * scale
-                l_px = (att.length or 2.0) * scale
+                # Length spans along primary axis, width along perpendicular
                 svg_parts.append(
-                    f'<rect x="{ax - w_px/2:.1f}" y="{ay - l_px/2:.1f}" width="{w_px:.1f}" height="{l_px:.1f}" fill="#f59e0b" fill-opacity="0.35" stroke="#d97706" stroke-width="1.5" rx="2" />'
+                    f'<rect x="{-l_px/2:.1f}" y="{-w_px/2:.1f}" width="{l_px:.1f}" height="{w_px:.1f}" fill="#f59e0b" fill-opacity="0.35" stroke="#d97706" stroke-width="1.5" rx="3" />'
                 )
+                # Stitch reinforcement ticks on ends
+                svg_parts.append(f'<line x1="{-l_px/2 + 4:.1f}" y1="{-w_px/2:.1f}" x2="{-l_px/2 + 4:.1f}" y2="{w_px/2:.1f}" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2,2"/>')
+                svg_parts.append(f'<line x1="{l_px/2 - 4:.1f}" y1="{-w_px/2:.1f}" x2="{l_px/2 - 4:.1f}" y2="{w_px/2:.1f}" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2,2"/>')
             elif att.type == AttachmentType.ZIPPER:
-                l_px = (att.length or 4.0) * scale
                 svg_parts.append(
-                    f'<line x1="{ax - l_px/2:.1f}" y1="{ay:.1f}" x2="{ax + l_px/2:.1f}" y2="{ay:.1f}" stroke="#dc2626" stroke-width="4" stroke-dasharray="3,3" />'
+                    f'<line x1="{-l_px/2:.1f}" y1="0" x2="{l_px/2:.1f}" y2="0" stroke="#dc2626" stroke-width="4" stroke-dasharray="3,3" />'
                 )
             elif att.type in (AttachmentType.GROMMET, AttachmentType.SNAP_BUTTON):
-                svg_parts.append(f'<circle cx="{ax:.1f}" cy="{ay:.1f}" r="7" fill="#e2e8f0" stroke="#475569" stroke-width="2" />')
-                svg_parts.append(f'<circle cx="{ax:.1f}" cy="{ay:.1f}" r="2.5" fill="#475569" />')
+                if att.length and att.length > 2.0:
+                    # Multi-magnet channel band
+                    svg_parts.append(
+                        f'<rect x="{-l_px/2:.1f}" y="{-w_px/2:.1f}" width="{l_px:.1f}" height="{w_px:.1f}" fill="#e2e8f0" fill-opacity="0.5" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,2" rx="4" />'
+                    )
+                    # Discrete magnet indicators
+                    for mx in [-l_px/3, 0.0, l_px/3]:
+                        svg_parts.append(f'<circle cx="{mx:.1f}" cy="0" r="6.5" fill="#e2e8f0" stroke="#475569" stroke-width="1.5" />')
+                        svg_parts.append(f'<circle cx="{mx:.1f}" cy="0" r="2" fill="#475569" />')
+                else:
+                    svg_parts.append(f'<circle cx="0" cy="0" r="7" fill="#e2e8f0" stroke="#475569" stroke-width="2" />')
+                    svg_parts.append(f'<circle cx="0" cy="0" r="2.5" fill="#475569" />')
             elif att.type == AttachmentType.BOX_X:
-                sz = (att.width or 1.0) * scale
-                svg_parts.append(f'<rect x="{ax-sz/2:.1f}" y="{ay-sz/2:.1f}" width="{sz:.1f}" height="{sz:.1f}" fill="none" stroke="#ef4444" stroke-width="1.5" />')
-                svg_parts.append(f'<line x1="{ax-sz/2:.1f}" y1="{ay-sz/2:.1f}" x2="{ax+sz/2:.1f}" y2="{ay+sz/2:.1f}" stroke="#ef4444" stroke-width="1.5" />')
-                svg_parts.append(f'<line x1="{ax-sz/2:.1f}" y1="{ay+sz/2:.1f}" x2="{ax+sz/2:.1f}" y2="{ay-sz/2:.1f}" stroke="#ef4444" stroke-width="1.5" />')
+                sz = w_px
+                svg_parts.append(f'<rect x="{-sz/2:.1f}" y="{-sz/2:.1f}" width="{sz:.1f}" height="{sz:.1f}" fill="none" stroke="#ef4444" stroke-width="1.5" />')
+                svg_parts.append(f'<line x1="{-sz/2:.1f}" y1="{-sz/2:.1f}" x2="{sz/2:.1f}" y2="{sz/2:.1f}" stroke="#ef4444" stroke-width="1.5" />')
+                svg_parts.append(f'<line x1="{-sz/2:.1f}" y1="{sz/2:.1f}" x2="{sz/2:.1f}" y2="{-sz/2:.1f}" stroke="#ef4444" stroke-width="1.5" />')
+            elif att.type == AttachmentType.ELASTIC:
+                svg_parts.append(
+                    f'<rect x="{-l_px/2:.1f}" y="{-w_px/2:.1f}" width="{l_px:.1f}" height="{w_px:.1f}" fill="#38bdf8" fill-opacity="0.3" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="2,2" rx="2" />'
+                )
             else:
-                svg_parts.append(f'<circle cx="{ax:.1f}" cy="{ay:.1f}" r="5" fill="#8b5cf6" />')
+                svg_parts.append(f'<circle cx="0" cy="0" r="5" fill="#8b5cf6" />')
 
-            # Numbered Badge Circle
+            svg_parts.append('</g>')
+
+            # Numbered Badge Circle (render unrotated at anchor position for readability)
+            badge_offset_x = (l_px / 2.0 + 12) if ang == 0.0 else 0
+            badge_offset_y = (w_px / 2.0 + 12) if ang == 90.0 else 0
             svg_parts.append(
-                f'<circle cx="{ax:.1f}" cy="{ay:.1f}" r="9.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5" />'
+                f'<circle cx="{ax + badge_offset_x:.1f}" cy="{ay + badge_offset_y:.1f}" r="9.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5" />'
             )
             svg_parts.append(
-                f'<text x="{ax:.1f}" y="{ay + 3.5:.1f}" font-size="10" font-family="sans-serif" font-weight="800" fill="#ffffff" text-anchor="middle">{item["num"]}</text>'
+                f'<text x="{ax + badge_offset_x:.1f}" y="{ay + badge_offset_y + 3.5:.1f}" font-size="10" font-family="sans-serif" font-weight="800" fill="#ffffff" text-anchor="middle">{item["num"]}</text>'
             )
 
     # 5. CAD Engineering Title Block & Attachment Legend Card (Sidebar)

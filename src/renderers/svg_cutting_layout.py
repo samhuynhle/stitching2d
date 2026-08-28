@@ -57,26 +57,41 @@ def render_nesting_layout_to_svg(
     border_colors = ["#2563eb", "#d97706", "#16a34a", "#9333ea", "#ea580c", "#4f46e5", "#0d9488"]
 
     for idx, p in enumerate(layout.placements):
-        c_idx = idx % len(colors)
-        bg = colors[c_idx]
-        border = border_colors[c_idx]
+        if p.is_optional:
+            bg = "#fef3c7"
+            border = "#d97706"
+            dash_attr = 'stroke-dasharray="5,3" stroke-width="2"'
+        else:
+            c_idx = idx % len(colors)
+            bg = colors[c_idx]
+            border = border_colors[c_idx]
+            dash_attr = 'stroke-width="1.5"'
 
         pts_str = " ".join([f"{tx(pt.x):.1f},{ty(pt.y):.1f}" for pt in p.cut_vertices])
         svg_parts.append(
-            f'<polygon points="{pts_str}" fill="{bg}" stroke="{border}" stroke-width="1.5" />'
+            f'<polygon points="{pts_str}" fill="{bg}" stroke="{border}" {dash_attr} />'
         )
 
         # Center label
         cx = tx(p.placed_x + p.width / 2.0)
         cy = ty(p.placed_y + p.height / 2.0)
 
+        if p.is_optional:
+            # Render OPTIONAL pill badge
+            svg_parts.append(
+                f'<rect x="{cx - 36:.1f}" y="{cy - 18:.1f}" width="72" height="14" rx="3" fill="#d97706" />'
+            )
+            svg_parts.append(
+                f'<text x="{cx:.1f}" y="{cy - 8:.1f}" font-family="sans-serif" font-size="8.5" font-weight="bold" fill="#ffffff" text-anchor="middle">OPTIONAL</text>'
+            )
+
         svg_parts.append(
-            f'<text x="{cx:.1f}" y="{cy:.1f}" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle" dy="-2">'
+            f'<text x="{cx:.1f}" y="{cy + (4 if p.is_optional else -2):.1f}" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">'
             f'{p.piece_name} #{p.instance_index}'
             f'</text>'
         )
         svg_parts.append(
-            f'<text x="{cx:.1f}" y="{cy:.1f}" font-family="sans-serif" font-size="9" fill="#475569" text-anchor="middle" dy="12">'
+            f'<text x="{cx:.1f}" y="{cy + (18 if p.is_optional else 12):.1f}" font-family="sans-serif" font-size="9" fill="#475569" text-anchor="middle">'
             f'{p.width:.1f}" × {p.height:.1f}" ({p.rotation_deg:.0f}°)'
             f'</text>'
         )

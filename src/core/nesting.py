@@ -18,6 +18,7 @@ class NestedPiecePlacement(BaseModel):
     piece_name: str
     instance_index: int
     is_mirrored: bool
+    is_optional: bool = False
     placed_x: float
     placed_y: float
     rotation_deg: float
@@ -85,6 +86,7 @@ def nest_pieces_for_fabric(
                 "piece_name": piece.name,
                 "instance_index": q + 1,
                 "is_mirrored": is_mirror,
+                "is_optional": piece.optional,
                 "base_verts": verts,
                 "allowed_rotations": allowed_rotations,
             })
@@ -160,6 +162,7 @@ def nest_pieces_for_fabric(
                     piece_name=item["piece_name"],
                     instance_index=item["instance_index"],
                     is_mirrored=item["is_mirrored"],
+                    is_optional=item["is_optional"],
                     placed_x=round(px, 3),
                     placed_y=round(py, 3),
                     rotation_deg=item["best_rot"],
@@ -194,6 +197,7 @@ def nest_pieces_for_fabric(
                 piece_name=item["piece_name"],
                 instance_index=item["instance_index"],
                 is_mirrored=item["is_mirrored"],
+                is_optional=item["is_optional"],
                 placed_x=round(px, 3),
                 placed_y=round(py, 3),
                 rotation_deg=item["best_rot"],

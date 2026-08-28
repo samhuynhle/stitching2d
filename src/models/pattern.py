@@ -93,6 +93,7 @@ class PatternPiece(BaseModel):
     edges: Optional[List[Edge]] = Field(None, description="Detailed edge definitions. If omitted, generated from vertices.")
     grainline: Optional[Grainline] = None
     attachments: List[Attachment] = Field(default_factory=list)
+    optional: bool = Field(False, description="If True, marked as optional in pattern drafting and nesting layouts")
     notes: Optional[str] = None
 
 

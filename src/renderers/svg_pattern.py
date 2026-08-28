@@ -256,6 +256,15 @@ def render_piece_to_svg(
     
     # Render Wrapped Title Lines
     cur_title_y = 18
+    if getattr(piece, "optional", False):
+        svg_parts.append(
+            f'  <rect x="14" y="{cur_title_y - 11}" width="70" height="15" rx="3" fill="#d97706" />'
+        )
+        svg_parts.append(
+            f'  <text x="49" y="{cur_title_y}" font-size="8.5" font-family="sans-serif" font-weight="800" fill="#ffffff" text-anchor="middle">OPTIONAL</text>'
+        )
+        cur_title_y += 18
+
     for t_line in title_lines:
         svg_parts.append(
             f'  <text x="14" y="{cur_title_y}" font-size="12" font-family="sans-serif" font-weight="700" fill="#0f172a">{t_line}</text>'

@@ -1,13 +1,12 @@
-#!/usr/bin/env python3
-"""
-Stitching2D Wiki Sync Script
-Pushes all Markdown documents in docs/wiki/ directly to the GitHub Wiki repository.
-"""
-
 import os
 import shutil
 import subprocess
 import sys
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
 
 WIKI_REPO_URL = "https://github.com/samhuynhle/stitching2d.wiki.git"
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

@@ -440,18 +440,67 @@ async function loadBOMView() {
   }
 }
 
-// Tab 5: Notes
-function loadNotesView() {
+// Tab 6: Illustrated Assembly Guide (IKEA / LEGO Style)
+async function loadNotesView() {
   const container = document.getElementById('notesContent');
-  if (!currentProjectData || !currentProjectData.sewing_notes) {
-    container.innerHTML = '<p>No construction notes provided.</p>';
-    return;
-  }
+  container.innerHTML = '<p style="color: #94a3b8; text-align: center; padding: 24px;">Loading illustrated assembly manual...</p>';
 
-  container.innerHTML = currentProjectData.sewing_notes.map((note, idx) => `
-    <div class="note-card">
-      <strong>Step ${idx + 1}</strong>
-      <p style="margin-top: 4px; color: var(--text-secondary);">${note}</p>
-    </div>
-  `).join('');
+  try {
+    const res = await fetch(`/api/projects/${currentProjectId}/assembly_guide?t=${Date.now()}`);
+    const data = await res.json();
+
+    if (!data.steps || data.steps.length === 0) {
+      container.innerHTML = '<p>No illustrated assembly steps available.</p>';
+      return;
+    }
+
+    container.innerHTML = data.steps.map(s => `
+      <div class="ikea-step-card">
+        <div class="ikea-step-header">
+          <span class="ikea-step-badge">Step 0${s.step_number}</span>
+          <div class="ikea-step-title-group">
+            <h3 class="ikea-step-title">${s.title}</h3>
+            <span class="ikea-step-phase">${s.phase}</span>
+          </div>
+        </div>
+
+        <div class="ikea-step-body">
+          <div class="ikea-diagram-panel">
+            ${s.svg}
+          </div>
+
+          <div class="ikea-directives-panel">
+            <div class="ikea-parts-box">
+              <span class="ikea-parts-title">🧩 Parts Needed (${s.parts_needed.length}):</span>
+              <div class="ikea-parts-list">
+                ${s.parts_needed.map(p => `
+                  <span class="ikea-part-pill">${p.badge} <strong>${p.name}</strong> ×${p.qty}</span>
+                `).join('')}
+              </div>
+            </div>
+
+            <ol class="ikea-instructions-list">
+              ${s.instructions.map(inst => `<li>${inst}</li>`).join('')}
+            </ol>
+
+            <div class="ikea-pro-tip">
+              <span>💡</span>
+              <div>${s.pro_tip}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  } catch (err) {
+    console.error('Failed to load illustrated assembly guide:', err);
+    // Fallback to text notes
+    if (currentProjectData && currentProjectData.sewing_notes) {
+      container.innerHTML = currentProjectData.sewing_notes.map((note, idx) => `
+        <div class="note-card">
+          <strong>Step ${idx + 1}</strong>
+          <p style="margin-top: 4px; color: var(--text-secondary);">${note}</p>
+        </div>
+      `).join('');
+    }
+  }
 }

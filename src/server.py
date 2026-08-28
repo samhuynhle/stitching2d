@@ -15,6 +15,7 @@ from .core.nesting import nest_project
 from .core.bom import generate_bom
 from .renderers.svg_pattern import render_piece_to_svg
 from .renderers.svg_cutting_layout import render_nesting_layout_to_svg
+from .renderers.svg_assembly_guide import get_illustrated_assembly_steps
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIRS = [
@@ -147,6 +148,18 @@ def get_bill_of_materials(project_id: str):
     project = load_project_from_file(project_id)
     bom = generate_bom(project)
     return bom.model_dump()
+
+
+@app.get("/api/projects/{project_id}/assembly_guide")
+def get_assembly_guide(project_id: str):
+    """Generates the IKEA/LEGO-style illustrated step-by-step assembly manual with SVG schematics."""
+    project = load_project_from_file(project_id)
+    steps = get_illustrated_assembly_steps()
+    return {
+        "project_name": project.name,
+        "total_steps": len(steps),
+        "steps": steps
+    }
 
 
 # Mount static assets

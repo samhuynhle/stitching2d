@@ -1,6 +1,7 @@
 ### **Stitching2D Documentation**
 
 * **[🏠 Home](Home)**
+* **[🤖 LLM Pattern Drafting Guide](LLM-Pattern-Drafting-Guide)**
 * **[📐 Pattern Drafting & Math](Pattern-Drafting-and-Math)**
 * **[🔗 Seam Topology & Validation](Seam-Topology-and-Validation)**
 * **[✂️ Fabric Nesting & BOM](Fabric-Nesting-and-BOM)**

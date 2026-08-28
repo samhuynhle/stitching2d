@@ -154,7 +154,7 @@ def get_bill_of_materials(project_id: str):
 def get_assembly_guide(project_id: str):
     """Generates the IKEA/LEGO-style illustrated step-by-step assembly manual with SVG schematics."""
     project = load_project_from_file(project_id)
-    steps = get_illustrated_assembly_steps()
+    steps = get_illustrated_assembly_steps(project_id=project_id)
     return {
         "project_name": project.name,
         "total_steps": len(steps),

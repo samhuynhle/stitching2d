@@ -330,8 +330,85 @@ def generate_step_6_svg() -> str:
     """
 
 
-def get_illustrated_assembly_steps() -> List[Dict[str, Any]]:
+def get_dry_bag_assembly_steps() -> List[Dict[str, Any]]:
+    """Returns illustrated steps for the Ultralight Roll-Top Dry Bag."""
+    return [
+        {
+            "step_number": 1,
+            "title": "Hypalon Rim Stiffener & Roll-Top Webbing Prep",
+            "phase": "Phase 1: Sub-Assemblies",
+            "parts_needed": [
+                {"name": "Main Cylinder Body (Silnylon)", "badge": "①", "qty": 1, "type": "fabric"},
+                {"name": "0.75in Hypalon Rim Stiffener", "badge": "🛡️", "qty": 1, "type": "insert"},
+                {"name": "0.75in Mil-Spec Webbing (28.0in)", "badge": "🧵", "qty": 1, "type": "linear"},
+                {"name": "Side-Release Buckle Set", "badge": "🪝", "qty": 1, "type": "hardware"}
+            ],
+            "instructions": [
+                "Lay the <strong>Main Cylinder Body</strong> flat with coated side facing up.",
+                "Align the <strong>Hypalon Stiffener Strip</strong> along the top opening edge.",
+                "Fold the top edge over <code>1.0in</code> to encase the hypalon strip and stitch along the bottom fold line.",
+                "Topstitch the <strong>0.75in Webbing</strong> over the stiffened hem, leaving <code>2.0in</code> tails on each end for the buckle hardware."
+            ],
+            "pro_tip": "Keep stitches parallel to the hypalon edge to maintain clean fold memory when rolling the dry bag closed.",
+            "svg": generate_step_1_svg()
+        },
+        {
+            "step_number": 2,
+            "title": "Longitudinal Side Seam & Flat-Fell Stitching",
+            "phase": "Phase 2: Main Body Assembly",
+            "parts_needed": [
+                {"name": "Prepared Cylinder Body", "badge": "①", "qty": 1, "type": "subassembly"}
+            ],
+            "instructions": [
+                "Fold the cylinder body in half with Right Sides Together (RST), aligning the side edges.",
+                "Sew the vertical side seam with <code>1/2in</code> seam allowance.",
+                "Trim the inner seam allowance to <code>1/4in</code>, fold the outer allowance over, and flat-fell topstitch for maximum hydrostatic pressure resistance."
+            ],
+            "pro_tip": "Use a walking foot and fine Microtex needle (size 70/10) to prevent puckering on slippery coated silnylon.",
+            "svg": generate_step_2_svg()
+        },
+        {
+            "step_number": 3,
+            "title": "Circular Base Insertion & Perimeter Stitching",
+            "phase": "Phase 3: Base Integration",
+            "parts_needed": [
+                {"name": "Circular Base Disc", "badge": "②", "qty": 1, "type": "fabric"},
+                {"name": "Cylinder Tube Body", "badge": "①", "qty": 1, "type": "subassembly"}
+            ],
+            "instructions": [
+                "Quarter-mark both the <strong>Circular Base Disc</strong> and the bottom opening of the tube body.",
+                "Match the four alignment notches with pins or wonder clips, Right Sides Together (RST).",
+                "Carefully stitch the circular perimeter with <code>3/8in</code> seam allowance, easing the fabric evenly around the curve."
+            ],
+            "pro_tip": "Sew with the circular base on the bottom against the feed dogs to let the machine naturally ease the seam.",
+            "svg": generate_step_5_svg()
+        },
+        {
+            "step_number": 4,
+            "title": "Hot-Air Seam Taping & Buckle Hardware Finish",
+            "phase": "Phase 4: Waterproofing & Finishing",
+            "parts_needed": [
+                {"name": "Assembled Dry Bag", "badge": "📦", "qty": 1, "type": "subassembly"},
+                {"name": "Waterproof PU Seam Tape (45.0in)", "badge": "💧", "qty": 1, "type": "linear"},
+                {"name": "0.75in Side-Release Buckle Set", "badge": "🪝", "qty": 1, "type": "hardware"}
+            ],
+            "instructions": [
+                "Turn the dry bag inside out so all raw interior seams are exposed.",
+                "Apply <strong>PU Hot-Air Seam Tape</strong> over all internal seams using an iron or heat press at medium heat (approx. 135°C / 275°F).",
+                "Turn right-side out, thread the <strong>Male and Female Buckles</strong> onto the webbing tails, and box-X stitch to secure.",
+                "Perform the 3-roll air tightness test: Roll top 3 times, buckle closed, and press firmly to verify zero air leakage."
+            ],
+            "pro_tip": "Test seam tape temperature on a scrap piece of silnylon first to ensure full adhesive bond without melting the fabric!",
+            "svg": generate_step_6_svg()
+        }
+    ]
+
+
+def get_illustrated_assembly_steps(project_id: str = "bouldering_chalk_bucket_pro") -> List[Dict[str, Any]]:
     """Returns the full structured data with SVG diagrams for the illustrated assembly manual."""
+    if "dry_bag" in project_id or "roll_top" in project_id:
+        return get_dry_bag_assembly_steps()
+    
     return [
         {
             "step_number": 1,

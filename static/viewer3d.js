@@ -398,21 +398,21 @@ function buildChalkBucket3D(project, group) {
     tabBack.userData = { pieceId: "ext_u_panel" };
     group.add(tabBack);
 
-    // 5. FRONT 3D MAGNETIC POCKET (X-Pac VX21)
+    // 5. FRONT 3D MAGNETIC POCKET (X-Pac VX21) — ELEVATED
     const pW = 7.5;
-    const pH = 4.5;
+    const pH = 4.2;
     const pD = 1.0;
     const pocketGeo = new THREE.BoxGeometry(pW, pH, pD);
     const pocketMesh = new THREE.Mesh(pocketGeo, xpacMat.clone());
-    pocketMesh.position.set(0, 4.5, halfBD - 0.2);
+    pocketMesh.position.set(0, 5.8, halfBD - 0.25);
     pocketMesh.userData = { pieceId: "front_3d_pocket" };
     pocketMesh.castShadow = true;
     group.add(pocketMesh);
 
-    // Pocket Flap
+    // Pocket Flap (Elevated)
     const flapGeo = new THREE.BoxGeometry(pW + 0.2, 1.2, pD + 0.15);
     const flapMesh = new THREE.Mesh(flapGeo, xpacMat.clone());
-    flapMesh.position.set(0, 6.5, halfBD - 0.15);
+    flapMesh.position.set(0, 7.8, halfBD - 0.2);
     flapMesh.userData = { pieceId: "front_pocket_flap" };
     group.add(flapMesh);
 
@@ -440,6 +440,15 @@ function buildChalkBucket3D(project, group) {
       bMag.userData = { pieceId: "basement_floor_panel" };
       group.add(bMag);
     }
+
+    // Center Low-Profile Travel Lock Snap Button (Matte Black Gunmetal)
+    const snapGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.15, 16);
+    snapGeo.rotateX(Math.PI / 2);
+    const snapMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.9, roughness: 0.3 });
+    const snapMesh = new THREE.Mesh(snapGeo, snapMat);
+    snapMesh.position.set(0, 1.65, halfBD + 0.22);
+    snapMesh.userData = { pieceId: "basement_floor_panel" };
+    group.add(snapMesh);
 
     // Basement Flap Quick-Pull Tab (Centered at top of 2in flap)
     const bTabGeo = new THREE.BoxGeometry(0.75, 0.7, 0.1);

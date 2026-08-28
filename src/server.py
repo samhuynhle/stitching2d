@@ -176,6 +176,14 @@ def serve_index():
     return HTMLResponse("<h2>Stitching2D Server Active</h2><p>Static UI not found.</p>")
 
 
+@app.get("/favicon.ico")
+def serve_favicon():
+    return Response(
+        content='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🧵</text></svg>',
+        media_type="image/svg+xml"
+    )
+
+
 @app.get("/nesting")
 def serve_nesting():
     nesting_path = os.path.join(STATIC_DIR, "nesting.html")

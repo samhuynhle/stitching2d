@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stitching2D — Precision 2D Pattern CAD & 3D Sewing Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <!-- Three.js & OrbitControls for 3D Product Preview -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- TOP HEADER -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">🧵</div>
+        <div class="brand-text">
+          <h1>Stitching2D</h1>
+          <span class="subtext">2D Pattern Drafting CAD & 3D Product Planner</span>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <div class="project-selector-wrapper">
+          <label for="projectSelect">Project:</label>
+          <select id="projectSelect" class="select-input"></select>
+        </div>
+
+        <div class="pill-group" id="headerMetrics">
+          <span class="pill pill-units" id="unitBadge">in</span>
+          <span class="pill pill-count" id="pieceCountBadge">0 Pieces</span>
+          <span class="pill pill-fabrics" id="fabricCountBadge">0 Fabrics</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN WORKSPACE -->
+    <div class="workspace">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <div class="section-header">
+            <h3>Pattern Pieces</h3>
+            <span class="badge" id="sidebarPieceCount">0</span>
+          </div>
+          <div class="piece-list" id="pieceList">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <div class="sidebar-section" id="pieceDetailsSection">
+          <div class="section-header">
+            <h3>Piece Inspector</h3>
+          </div>
+          <div class="inspector-card" id="pieceInspector">
+            <p class="empty-state-text">Select a pattern piece to inspect dimensions, seam allowances, and attachments.</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- VIEWPORT CONTENT -->
+      <main class="main-viewport">
+        <!-- NAVIGATION TABS -->
+        <nav class="viewport-tabs">
+          <button class="tab-btn active" data-tab="cadTab">📐 2D CAD Pattern View</button>
+          <button class="tab-btn" data-tab="threeTab" id="threeTabBtn">🧊 3D Product Preview</button>
+          <button class="tab-btn" data-tab="nestingTab">✂️ Fabric Cutting & Nesting</button>
+          <button class="tab-btn" data-tab="seamTab">🔗 Seam Logic & Ease</button>
+          <button class="tab-btn" data-tab="bomTab">📊 Bill of Materials (BOM)</button>
+          <button class="tab-btn" data-tab="notesTab">📋 Assembly Guide</button>
+        </nav>
+
+        <!-- TAB 1: CAD PATTERN VIEW -->
+        <div class="tab-content active" id="cadTab">
+          <div class="cad-toolbar">
+            <div class="toolbar-group">
+              <span class="toolbar-title" id="activePieceTitle">Overview</span>
+            </div>
+
+            <div class="toolbar-group layer-toggles">
+              <label class="toggle-label"><input type="checkbox" id="toggleCutLine" checked> Cut Line (SA)</label>
+              <label class="toggle-label"><input type="checkbox" id="toggleDimensions" checked> Dimensions</label>
+              <label class="toggle-label"><input type="checkbox" id="toggleGrainline" checked> Grainline</label>
+              <label class="toggle-label"><input type="checkbox" id="toggleAttachments" checked> Attachments</label>
+            </div>
+
+            <div class="toolbar-group zoom-controls">
+              <button class="btn btn-sm" id="zoomOutBtn">🔍−</button>
+              <span id="zoomLevelText">100%</span>
+              <button class="btn btn-sm" id="zoomInBtn">🔍+</button>
+              <button class="btn btn-sm" id="resetZoomBtn">Reset</button>
+            </div>
+          </div>
+
+          <div class="cad-canvas-container" id="cadCanvasContainer">
+            <div class="svg-stage" id="svgStage">
+              <div class="empty-state">Loading pattern piece...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: THREE.JS 3D PRODUCT PREVIEW -->
+        <div class="tab-content" id="threeTab">
+          <div class="cad-toolbar">
+            <div class="toolbar-group">
+              <span class="toolbar-title">🧊 3D Parametric Product Preview</span>
+            </div>
+
+            <div class="toolbar-group interactive-3d-controls">
+              <label class="toggle-label" title="Simulate magnetic mouth opening & snap closing">
+                🧲 Mouth Snap:
+                <input type="range" id="snapSlider" min="0.0" max="1.0" step="0.05" value="1.0" class="range-slider">
+              </label>
+
+              <label class="toggle-label">
+                Layer:
+                <select id="layerViewSelect" class="select-input select-sm">
+                  <option value="all">Full Assembly (All Layers)</option>
+                  <option value="exterior">Exterior Shell (1000D Cordura)</option>
+                  <option value="baffles">Internal Anti-Puff Baffles (70D Ripstop)</option>
+                  <option value="lining">Interior Fleece Lining</option>
+                </select>
+              </label>
+
+              <button class="btn btn-sm" id="toggleXrayBtn" title="Toggle Transparent X-Ray view">🔍 X-Ray</button>
+              <button class="btn btn-sm" id="toggleWireframeBtn" title="Toggle Seam Wireframe mesh">🕸️ Wireframe</button>
+            </div>
+          </div>
+
+          <div class="three-viewport-container" id="threeCanvasContainer">
+            <!-- Three.js WebGL canvas injected here -->
+          </div>
+          
+          <div class="three-floating-hint">
+            <span>🖱️ <strong>Left Click + Drag:</strong> Rotate Orbit | <strong>Right Click + Drag:</strong> Pan | <strong>Scroll:</strong> Zoom</span>
+          </div>
+        </div>
+
+        <!-- TAB 3: FABRIC NESTING -->
+        <div class="tab-content" id="nestingTab">
+          <div class="nesting-toolbar">
+            <div class="toolbar-group">
+              <label for="nestingFabricSelect">Fabric Layer:</label>
+              <select id="nestingFabricSelect" class="select-input"></select>
+            </div>
+            <div class="nesting-summary-stats" id="nestingStats">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <div class="nesting-canvas-container" id="nestingCanvasContainer">
+            <!-- Nesting SVG injected here -->
+          </div>
+        </div>
+
+        <!-- TAB 4: SEAM TOPOLOGY -->
+        <div class="tab-content" id="seamTab">
+          <div class="seam-header-card" id="seamHeaderCard">
+            <!-- Seam topology stats -->
+          </div>
+          <div class="table-container">
+            <table class="data-table" id="seamsTable">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Source Edge</th>
+                  <th>Target Edge</th>
+                  <th>Source Length</th>
+                  <th>Target Length</th>
+                  <th>Delta (ΔL)</th>
+                  <th>Ease %</th>
+                  <th>SA Compatible</th>
+                </tr>
+              </thead>
+              <tbody id="seamsTableBody">
+                <!-- Seams injected here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 5: BILL OF MATERIALS -->
+        <div class="tab-content" id="bomTab">
+          <div class="bom-grid" id="bomContent">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- TAB 6: ASSEMBLY NOTES -->
+        <div class="tab-content" id="notesTab">
+          <div class="notes-container" id="notesContent">
+            <!-- Notes injected here -->
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/viewer3d.js?v=6.1.0"></script>
+  <script src="/static/app.js?v=6.1.0"></script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+{
+  "id": "boxed_corner_zipper_pouch",
+  "name": "Boxed Corner Tactical Gear Pouch",
+  "version": "1.0.0",
+  "description": "Heavy-duty boxed corner EDC gear pouch with YKK #5 continuous coil zipper, zipper end tabs, and 3/4in grosgrain grab loops.",
+  "units": "in",
+  "fabrics": [
+    {
+      "id": "xpac_vx21",
+      "name": "Dimension-Polyant X-Pac VX21 (Exterior)",
+      "type": "Laminated Technical Composite",
+      "bolt_width": 54.0,
+      "cost_per_yard": 26.00,
+      "directional_nap": false
+    },
+    {
+      "id": "packcloth_lining",
+      "name": "210D Oxford Nylon (Interior Lining)",
+      "type": "210D Coated Oxford Nylon",
+      "bolt_width": 60.0,
+      "cost_per_yard": 7.50,
+      "directional_nap": false
+    }
+  ],
+  "pieces": [
+    {
+      "id": "main_body_panel",
+      "name": "Exterior Main Body Panel (Boxed Corners)",
+      "category": "main_body",
+      "fabric_id": "xpac_vx21",
+      "quantity": 2,
+      "mirror": false,
+      "default_seam_allowance": 0.5,
+      "vertices": [
+        {"x": 1.5, "y": 0.0},
+        {"x": 8.5, "y": 0.0},
+        {"x": 8.5, "y": 1.5},
+        {"x": 10.0, "y": 1.5},
+        {"x": 10.0, "y": 7.0},
+        {"x": 0.0, "y": 7.0},
+        {"x": 0.0, "y": 1.5},
+        {"x": 1.5, "y": 1.5}
+      ],
+      "grainline": {
+        "start_point": {"x": 5.0, "y": 1.0},
+        "end_point": {"x": 5.0, "y": 6.0},
+        "angle_deg": 0.0,
+        "directional": false
+      },
+      "attachments": [
+        {
+          "id": "side_grab_loop",
+          "name": "3/4in Grosgrain Grab Loop",
+          "type": "webbing",
+          "position": {"x": 0.0, "y": 6.5},
+          "length": 2.0,
+          "width": 0.75,
+          "angle_deg": 0.0,
+          "layer": "sandwiched",
+          "notes": "Folded loop inserted into side seam near zipper end"
+        },
+        {
+          "id": "zipper_top",
+          "name": "YKK #5 Zipper Tape Placement",
+          "type": "zipper",
+          "position": {"x": 5.0, "y": 7.0},
+          "length": 10.0,
+          "width": 1.25,
+          "angle_deg": 0.0,
+          "layer": "exterior",
+          "notes": "Stitched along top edge with 3/8in SA"
+        }
+      ]
+    },
+    {
+      "id": "lining_body_panel",
+      "name": "Lining Body Panel (Boxed Corners)",
+      "category": "lining",
+      "fabric_id": "packcloth_lining",
+      "quantity": 2,
+      "mirror": false,
+      "default_seam_allowance": 0.5,
+      "vertices": [
+        {"x": 1.5, "y": 0.0},
+        {"x": 8.5, "y": 0.0},
+        {"x": 8.5, "y": 1.5},
+        {"x": 10.0, "y": 1.5},
+        {"x": 10.0, "y": 7.0},
+        {"x": 0.0, "y": 7.0},
+        {"x": 0.0, "y": 1.5},
+        {"x": 1.5, "y": 1.5}
+      ],
+      "grainline": {
+        "start_point": {"x": 5.0, "y": 1.0},
+        "end_point": {"x": 5.0, "y": 6.0},
+        "angle_deg": 0.0,
+        "directional": false
+      },
+      "attachments": []
+    },
+    {
+      "id": "zipper_end_tab",
+      "name": "Zipper End Cover Tab",
+      "category": "trim",
+      "fabric_id": "xpac_vx21",
+      "quantity": 2,
+      "mirror": false,
+      "default_seam_allowance": 0.25,
+      "vertices": [
+        {"x": 0.0, "y": 0.0},
+        {"x": 1.5, "y": 0.0},
+        {"x": 1.5, "y": 2.0},
+        {"x": 0.0, "y": 2.0}
+      ],
+      "grainline": {
+        "start_point": {"x": 0.75, "y": 0.2},
+        "end_point": {"x": 0.75, "y": 1.8},
+        "angle_deg": 0.0,
+        "directional": false
+      },
+      "attachments": []
+    }
+  ],
+  "hardware": [
+    {
+      "id": "hw_zipper_slider",
+      "name": "YKK #5 Reverse Coil Slider (Matte Black)",
+      "type": "Zipper Slider",
+      "quantity": 1,
+      "notes": "Non-locking coil pull"
+    },
+    {
+      "id": "hw_zipper_tape",
+      "name": "YKK #5 Continuous Coil Zipper Tape",
+      "type": "Zipper",
+      "quantity": 1,
+      "notes": "11.5 inches total cut length"
+    }
+  ],
+  "sewing_notes": [
+    "1. Attach zipper end tabs to both ends of the 11.5in zipper tape.",
+    "2. Sew exterior body to zipper tape right sides together; sandwich lining on bottom.",
+    "3. Topstitch along zipper edge with 1/8in edge guide.",
+    "4. Insert 3/4in grab loops at upper side seams.",
+    "5. Sew bottom and side seams, leaving 3in opening in lining for turning.",
+    "6. Box the four 1.5in x 1.5in corner cutouts and stitch across with 1/2in seam allowance."
+  ]
+}

@@ -1,0 +1,229 @@
+{
+  "id": "climbing_chalk_bag_pro",
+  "name": "Pro Ergonomic Climbing Chalk Bag",
+  "version": "1.0.0",
+  "description": "Ergonomic tapered chalk bag with fleece lining, ripstop drawstring cinch collar, 1in webbing belt loops, and elastic brush holder.",
+  "units": "in",
+  "fabrics": [
+    {
+      "id": "cordura_500d",
+      "name": "500D Mil-Spec Cordura (Exterior)",
+      "type": "500D Cordura Nylon",
+      "bolt_width": 60.0,
+      "cost_per_yard": 14.50,
+      "directional_nap": false
+    },
+    {
+      "id": "ripstop_cinch",
+      "name": "70D Diamond Ripstop (Collar)",
+      "type": "70D Ripstop Nylon",
+      "bolt_width": 58.0,
+      "cost_per_yard": 8.00,
+      "directional_nap": false
+    },
+    {
+      "id": "polar_fleece",
+      "name": "High-Loft Polar Fleece (Lining)",
+      "type": "Polar Fleece 200gsm",
+      "bolt_width": 58.0,
+      "cost_per_yard": 11.00,
+      "directional_nap": true
+    }
+  ],
+  "pieces": [
+    {
+      "id": "exterior_body",
+      "name": "Exterior Main Body Panel",
+      "category": "main_body",
+      "fabric_id": "cordura_500d",
+      "quantity": 1,
+      "mirror": false,
+      "default_seam_allowance": 0.5,
+      "vertices": [
+        {"x": 0.0, "y": 0.0},
+        {"x": 16.5, "y": 0.0},
+        {"x": 16.0, "y": 7.5},
+        {"x": 0.5, "y": 7.5}
+      ],
+      "grainline": {
+        "start_point": {"x": 8.25, "y": 1.0},
+        "end_point": {"x": 8.25, "y": 6.5},
+        "angle_deg": 0.0,
+        "directional": false
+      },
+      "attachments": [
+        {
+          "id": "belt_loop_left",
+          "name": "1in Webbing Belt Loop (Left)",
+          "type": "webbing",
+          "position": {"x": 3.5, "y": 5.5},
+          "length": 2.5,
+          "width": 1.0,
+          "angle_deg": 90.0,
+          "layer": "exterior",
+          "notes": "Folded loop bartacked to upper rim"
+        },
+        {
+          "id": "belt_loop_right",
+          "name": "1in Webbing Belt Loop (Right)",
+          "type": "webbing",
+          "position": {"x": 13.0, "y": 5.5},
+          "length": 2.5,
+          "width": 1.0,
+          "angle_deg": 90.0,
+          "layer": "exterior",
+          "notes": "Folded loop bartacked to upper rim"
+        },
+        {
+          "id": "brush_loop",
+          "name": "Elastic Brush Holder Loop",
+          "type": "elastic",
+          "position": {"x": 8.25, "y": 3.75},
+          "length": 1.5,
+          "width": 0.75,
+          "angle_deg": 90.0,
+          "layer": "exterior",
+          "notes": "Heavy stretch elastic loop"
+        }
+      ]
+    },
+    {
+      "id": "exterior_bottom_base",
+      "name": "Exterior Circular Base Disc",
+      "category": "gusset",
+      "fabric_id": "cordura_500d",
+      "quantity": 1,
+      "mirror": false,
+      "default_seam_allowance": 0.5,
+      "vertices": [
+        {"x": 2.5, "y": 0.0},
+        {"x": 4.27, "y": 0.73},
+        {"x": 5.0, "y": 2.5},
+        {"x": 4.27, "y": 4.27},
+        {"x": 2.5, "y": 5.0},
+        {"x": 0.73, "y": 4.27},
+        {"x": 0.0, "y": 2.5},
+        {"x": 0.73, "y": 0.73}
+      ],
+      "grainline": {
+        "start_point": {"x": 2.5, "y": 0.5},
+        "end_point": {"x": 2.5, "y": 4.5},
+        "angle_deg": 0.0,
+        "directional": false
+      },
+      "attachments": []
+    },
+    {
+      "id": "cinch_collar",
+      "name": "Drawstring Cinch Collar",
+      "category": "trim",
+      "fabric_id": "ripstop_cinch",
+      "quantity": 1,
+      "mirror": false,
+      "default_seam_allowance": 0.375,
+      "vertices": [
+        {"x": 0.0, "y": 0.0},
+        {"x": 16.5, "y": 0.0},
+        {"x": 16.5, "y": 4.5},
+        {"x": 0.0, "y": 4.5}
+      ],
+      "grainline": {
+        "start_point": {"x": 8.25, "y": 0.5},
+        "end_point": {"x": 8.25, "y": 4.0},
+        "angle_deg": 0.0,
+        "directional": false
+      },
+      "attachments": [
+        {
+          "id": "grommet_cord_exit",
+          "name": "#0 Brass Grommet (Cord Exit)",
+          "type": "grommet",
+          "position": {"x": 8.25, "y": 3.0},
+          "length": 0.35,
+          "width": 0.35,
+          "angle_deg": 0.0,
+          "layer": "exterior",
+          "notes": "Reinforced cord outlet"
+        }
+      ]
+    },
+    {
+      "id": "fleece_lining_body",
+      "name": "Fleece Lining Body Panel",
+      "category": "lining",
+      "fabric_id": "polar_fleece",
+      "quantity": 1,
+      "mirror": false,
+      "default_seam_allowance": 0.5,
+      "vertices": [
+        {"x": 0.0, "y": 0.0},
+        {"x": 16.0, "y": 0.0},
+        {"x": 15.5, "y": 7.0},
+        {"x": 0.5, "y": 7.0}
+      ],
+      "grainline": {
+        "start_point": {"x": 8.0, "y": 1.0},
+        "end_point": {"x": 8.0, "y": 6.0},
+        "angle_deg": 0.0,
+        "directional": true
+      },
+      "attachments": []
+    },
+    {
+      "id": "fleece_lining_base",
+      "name": "Fleece Lining Base Disc",
+      "category": "lining",
+      "fabric_id": "polar_fleece",
+      "quantity": 1,
+      "mirror": false,
+      "default_seam_allowance": 0.5,
+      "vertices": [
+        {"x": 2.4, "y": 0.0},
+        {"x": 4.1, "y": 0.7},
+        {"x": 4.8, "y": 2.4},
+        {"x": 4.1, "y": 4.1},
+        {"x": 2.4, "y": 4.8},
+        {"x": 0.7, "y": 4.1},
+        {"x": 0.0, "y": 2.4},
+        {"x": 0.7, "y": 0.7}
+      ],
+      "grainline": {
+        "start_point": {"x": 2.4, "y": 0.5},
+        "end_point": {"x": 2.4, "y": 4.3},
+        "angle_deg": 0.0,
+        "directional": true
+      },
+      "attachments": []
+    }
+  ],
+  "hardware": [
+    {
+      "id": "hw_cordlock",
+      "name": "ITW Nexus Cyberian Cordlock",
+      "type": "Cordlock",
+      "quantity": 1,
+      "notes": "Spring-loaded one-handed cinch cordlock"
+    },
+    {
+      "id": "hw_paracord",
+      "name": "2.75mm Reflective Glow Paracord",
+      "type": "Cording",
+      "quantity": 1,
+      "notes": "28 inches total cut length"
+    },
+    {
+      "id": "hw_grommet",
+      "name": "#0 Brass Eyelet & Washer",
+      "type": "Grommet",
+      "quantity": 1,
+      "notes": "1/4in inner diameter"
+    }
+  ],
+  "sewing_notes": [
+    "1. Stay-stitch circular base pieces before joining to body panels to prevent bias distortion.",
+    "2. Sew belt loops and elastic brush loop to Exterior Main Body prior to side seam closure.",
+    "3. Join Exterior Main Body side seam using 1/2in seam allowance, press seam flat.",
+    "4. Install #0 Grommet in Cinch Collar at indicated marker before folding channel.",
+    "5. Sandwich Cinch Collar between Exterior Main Body and Fleece Lining at upper rim, topstitch with 1/4in margin."
+  ]
+}

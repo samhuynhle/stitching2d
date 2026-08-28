@@ -17,7 +17,10 @@ from .renderers.svg_pattern import render_piece_to_svg
 from .renderers.svg_cutting_layout import render_nesting_layout_to_svg
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(PROJECT_ROOT, "data", "projects")
+DATA_DIRS = [
+    os.path.join(PROJECT_ROOT, "data", "projects"),
+    os.path.join(PROJECT_ROOT, "data", "private_projects")
+]
 STATIC_DIR = os.path.join(PROJECT_ROOT, "static")
 
 app = FastAPI(title="Stitching2D Server", description="Precision 2D Stitching CAD & Pattern Planner")
@@ -32,10 +35,17 @@ app.add_middleware(
 
 
 def load_project_from_file(project_id: str) -> ProjectPattern:
-    filepath = os.path.join(DATA_DIR, f"{project_id}.json")
-    if not os.path.exists(filepath):
+    for d in DATA_DIRS:
+        if not os.path.exists(d):
+            continue
+        filepath = os.path.join(d, f"{project_id}.json")
+        if os.path.exists(filepath):
+            with open(filepath, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                return ProjectPattern(**data)
+        
         # Search all json files in case ID differs from filename
-        for f in glob.glob(os.path.join(DATA_DIR, "*.json")):
+        for f in glob.glob(os.path.join(d, "*.json")):
             with open(f, "r", encoding="utf-8") as handle:
                 try:
                     data = json.load(handle)
@@ -43,31 +53,35 @@ def load_project_from_file(project_id: str) -> ProjectPattern:
                         return ProjectPattern(**data)
                 except Exception:
                     pass
-        raise HTTPException(status_code=404, detail=f"Project '{project_id}' not found.")
-    with open(filepath, "r", encoding="utf-8") as f:
-        data = json.load(f)
-        return ProjectPattern(**data)
+    raise HTTPException(status_code=404, detail=f"Project '{project_id}' not found.")
 
 
 @app.get("/api/projects")
 def list_projects():
-    """Lists all available sewing projects in the data directory."""
+    """Lists all available sewing projects across public and private directories."""
     projects = []
-    for f in glob.glob(os.path.join(DATA_DIR, "*.json")):
-        try:
-            with open(f, "r", encoding="utf-8") as handle:
-                data = json.load(handle)
-                projects.append({
-                    "id": data.get("id"),
-                    "name": data.get("name"),
-                    "description": data.get("description"),
-                    "units": data.get("units", "in"),
-                    "pieces_count": len(data.get("pieces", [])),
-                    "fabrics_count": len(data.get("fabrics", [])),
-                    "filename": os.path.basename(f)
-                })
-        except Exception as e:
+    seen_ids = set()
+    for d in DATA_DIRS:
+        if not os.path.exists(d):
             continue
+        is_private = "private" in d
+        for f in glob.glob(os.path.join(d, "*.json")):
+            try:
+                with open(f, "r", encoding="utf-8") as handle:
+                    data = json.load(handle)
+                    p_id = data.get("id")
+                    if p_id and p_id not in seen_ids:
+                        seen_ids.add(p_id)
+                        name_display = f"[Private] {data.get('name')}" if is_private else data.get("name")
+                        projects.append({
+                            "id": p_id,
+                            "name": name_display,
+                            "version": data.get("version", "1.0.0"),
+                            "description": data.get("description", ""),
+                            "is_private": is_private
+                        })
+            except Exception as e:
+                print(f"Error loading project {f}: {e}")
     return {"projects": projects}
 
 

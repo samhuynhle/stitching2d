@@ -24,20 +24,39 @@ from src.server import start_server
 
 
 def load_project_file(path: str) -> ProjectPattern:
-    if not os.path.exists(path):
-        # Check inside data/projects/
-        alt_path = os.path.join(PROJECT_ROOT, "data", "projects", path)
-        if os.path.exists(alt_path):
-            path = alt_path
-        elif os.path.exists(f"{alt_path}.json"):
-            path = f"{alt_path}.json"
-        else:
-            print(f"❌ Error: File not found at '{path}'")
-            sys.exit(1)
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
+            return ProjectPattern(**json.load(f))
 
-    with open(path, "r", encoding="utf-8") as f:
-        data = json.load(f)
-        return ProjectPattern(**data)
+    # Check direct candidate paths
+    candidates = [
+        os.path.join(PROJECT_ROOT, "data", "projects", path),
+        os.path.join(PROJECT_ROOT, "data", "projects", f"{path}.json"),
+        os.path.join(PROJECT_ROOT, "data", "private_projects", path),
+        os.path.join(PROJECT_ROOT, "data", "private_projects", f"{path}.json")
+    ]
+    for c in candidates:
+        if os.path.exists(c):
+            with open(c, "r", encoding="utf-8") as f:
+                return ProjectPattern(**json.load(f))
+
+    # Search all json files across directories by internal ID or partial match
+    for d in [os.path.join(PROJECT_ROOT, "data", "projects"), os.path.join(PROJECT_ROOT, "data", "private_projects")]:
+        if not os.path.exists(d):
+            continue
+        for f in os.listdir(d):
+            if f.endswith(".json"):
+                full_p = os.path.join(d, f)
+                try:
+                    with open(full_p, "r", encoding="utf-8") as handle:
+                        data = json.load(handle)
+                        if data.get("id") == path or os.path.splitext(f)[0] == path:
+                            return ProjectPattern(**data)
+                except Exception:
+                    pass
+
+    print(f"❌ Error: Project file not found for '{path}'")
+    sys.exit(1)
 
 
 def main():

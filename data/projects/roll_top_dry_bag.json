@@ -1,0 +1,139 @@
+{
+  "id": "roll_top_dry_bag",
+  "name": "Ultralight Roll-Top Dry Bag (10L)",
+  "version": "1.0.0",
+  "description": "Standard 10L ultralight cylindrical roll-top dry bag with hypalon stiffener rim and side-release buckle.",
+  "units": "in",
+  "fabrics": [
+    {
+      "id": "ripstop_silnylon",
+      "name": "70D Silicone/PU Coated Ripstop Nylon",
+      "type": "Waterproof Coated Ripstop",
+      "bolt_width": 58.0,
+      "cost_per_yard": 8.50,
+      "directional_nap": false
+    }
+  ],
+  "pieces": [
+    {
+      "id": "cylinder_body_wrap",
+      "name": "Cylinder Main Body Wrap Panel",
+      "category": "main_body",
+      "fabric_id": "ripstop_silnylon",
+      "quantity": 1,
+      "mirror": false,
+      "default_seam_allowance": 0.5,
+      "vertices": [
+        {"x": 0.0, "y": 0.0},
+        {"x": 25.13, "y": 0.0},
+        {"x": 25.13, "y": 18.0},
+        {"x": 0.0, "y": 18.0}
+      ],
+      "grainline": {
+        "start_point": {"x": 12.56, "y": 2.0},
+        "end_point": {"x": 12.56, "y": 16.0},
+        "angle_deg": 0.0,
+        "directional": false
+      },
+      "attachments": [
+        {
+          "id": "top_hypalon_stiffener",
+          "name": "Hypalon Roll-Top Stiffener Band",
+          "type": "webbing",
+          "position": {"x": 12.56, "y": 17.0},
+          "length": 25.13,
+          "width": 1.0,
+          "angle_deg": 0.0,
+          "layer": "sandwiched",
+          "notes": "Encased stiffener band along mouth"
+        },
+        {
+          "id": "buckle_male",
+          "name": "0.75in Male Buckle Anchor",
+          "type": "webbing",
+          "position": {"x": 1.0, "y": 17.0},
+          "length": 2.5,
+          "width": 0.75,
+          "angle_deg": 0.0,
+          "layer": "exterior",
+          "notes": "Male side-release buckle"
+        },
+        {
+          "id": "buckle_female",
+          "name": "0.75in Female Buckle Anchor",
+          "type": "webbing",
+          "position": {"x": 24.13, "y": 17.0},
+          "length": 2.5,
+          "width": 0.75,
+          "angle_deg": 0.0,
+          "layer": "exterior",
+          "notes": "Female side-release buckle"
+        }
+      ]
+    },
+    {
+      "id": "circular_base",
+      "name": "Circular Base Disc (8in Diameter)",
+      "category": "main_body",
+      "fabric_id": "ripstop_silnylon",
+      "quantity": 1,
+      "mirror": false,
+      "default_seam_allowance": 0.5,
+      "vertices": [
+        {"x": 4.0, "y": 0.0},
+        {"x": 5.04, "y": 0.14},
+        {"x": 6.0, "y": 0.54},
+        {"x": 6.83, "y": 1.17},
+        {"x": 7.46, "y": 2.0},
+        {"x": 7.86, "y": 2.96},
+        {"x": 8.0, "y": 4.0},
+        {"x": 7.86, "y": 5.04},
+        {"x": 7.46, "y": 6.0},
+        {"x": 6.83, "y": 6.83},
+        {"x": 6.0, "y": 7.46},
+        {"x": 5.04, "y": 7.86},
+        {"x": 4.0, "y": 8.0},
+        {"x": 2.96, "y": 7.86},
+        {"x": 2.0, "y": 7.46},
+        {"x": 1.17, "y": 6.83},
+        {"x": 0.54, "y": 6.0},
+        {"x": 0.14, "y": 5.04},
+        {"x": 0.0, "y": 4.0},
+        {"x": 0.14, "y": 2.96},
+        {"x": 0.54, "y": 2.0},
+        {"x": 1.17, "y": 1.17},
+        {"x": 2.0, "y": 0.54},
+        {"x": 2.96, "y": 0.14}
+      ],
+      "grainline": {
+        "start_point": {"x": 4.0, "y": 1.0},
+        "end_point": {"x": 4.0, "y": 7.0},
+        "angle_deg": 0.0,
+        "directional": false
+      },
+      "attachments": []
+    }
+  ],
+  "hardware": [
+    {
+      "id": "hw_dry_bag_buckle",
+      "name": "0.75in Duraflex Dual-Adjust Side-Release Buckle",
+      "type": "Buckle",
+      "quantity": 1,
+      "notes": "Roll-top buckle closure"
+    },
+    {
+      "id": "hw_d_ring",
+      "name": "0.75in Plastic D-Ring",
+      "type": "D-Ring",
+      "quantity": 1,
+      "notes": "Attachment anchor"
+    }
+  ],
+  "sewing_notes": [
+    "1. Hem top collar and sandwich the Hypalon stiffener band with 0.75in webbing loops.",
+    "2. Stitch side longitudinal seam with 1/2in SA (French seam for waterproof seal).",
+    "3. Pin and ease circular base to bottom circumference of body wrap with 1/2in SA.",
+    "4. Apply waterproof seam grip or heat-activated seam tape along all interior joins."
+  ]
+}

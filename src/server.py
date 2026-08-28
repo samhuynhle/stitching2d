@@ -163,6 +163,15 @@ def serve_index():
     return HTMLResponse("<h2>Stitching2D Server Active</h2><p>Static UI not found.</p>")
 
 
+@app.get("/nesting")
+def serve_nesting():
+    nesting_path = os.path.join(STATIC_DIR, "nesting.html")
+    if os.path.exists(nesting_path):
+        with open(nesting_path, "r", encoding="utf-8") as f:
+            return HTMLResponse(content=f.read())
+    return HTMLResponse("<h2>Stitching2D Nesting View Active</h2>")
+
+
 def start_server(host: str = "0.0.0.0", port: int = 5050):
     print(f"🧵 Starting Stitching2D Server on http://localhost:{port}")
     uvicorn.run("src.server:app", host=host, port=port, reload=True)

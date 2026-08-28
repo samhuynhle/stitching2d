@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stitching2D — Fabric Cutting & Nesting Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    body {
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      padding: 24px;
+    }
+    .nesting-standalone-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #334155;
+    }
+    .nesting-standalone-header h1 {
+      font-size: 22px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nesting-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .nesting-controls select {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid #475569;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .canvas-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 24px;
+      overflow-x: auto;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+    .nav-link {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .nav-link:hover {
+      text-decoration: underline;
+    }
+    .metrics-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="nesting-standalone-header">
+    <div>
+      <h1>✂️ Fabric Cutting & Nesting Studio</h1>
+      <span style="color: #94a3b8; font-size: 13px;">CAD Marker Key &amp; Automated Roll Nesting Optimizer</span>
+    </div>
+    <div class="nesting-controls">
+      <label for="fabSelect"><strong>Fabric Bolt:</strong></label>
+      <select id="fabSelect"></select>
+      <a href="/" class="nav-link">← Return to Full CAD Dashboard</a>
+    </div>
+  </div>
+
+  <div class="metrics-bar" id="metricsBar"></div>
+
+  <div class="canvas-card" id="svgContainer">
+    <p style="color: #94a3b8;">Loading nesting markers...</p>
+  </div>
+
+  <script>
+    let nestingCache = null;
+
+    async function loadNesting() {
+      try {
+        const res = await fetch('/api/projects/bouldering_chalk_bucket_pro/nesting?t=' + Date.now());
+        nestingCache = await res.json();
+
+        const select = document.getElementById('fabSelect');
+        const metrics = document.getElementById('metricsBar');
+        const container = document.getElementById('svgContainer');
+
+        select.innerHTML = '';
+        const keys = Object.keys(nestingCache);
+
+        keys.forEach(k => {
+          const opt = document.createElement('option');
+          opt.value = k;
+          opt.textContent = nestingCache[k].fabric_name;
+          select.appendChild(opt);
+        });
+
+        function render(fabId) {
+          const layout = nestingCache[fabId];
+          if (!layout) return;
+
+          metrics.innerHTML = `
+            <span class="pill pill-units" style="background:#0284c7; color:#fff; padding:6px 12px; border-radius:6px; font-weight:700;">Bolt: ${layout.bolt_width}"</span>
+            <span class="pill pill-count" style="background:#475569; color:#fff; padding:6px 12px; border-radius:6px; font-weight:700;">Cut Length: ${layout.total_cut_length_yards} yds (${layout.total_cut_length}")</span>
+            <span class="pill pill-fabrics" style="background:#16a34a; color:#fff; padding:6px 12px; border-radius:6px; font-weight:700;">Utilization: ${layout.utilization_rate_percent}%</span>
+            <span class="pill" style="background:#dc2626; color:#fff; padding:6px 12px; border-radius:6px; font-weight:700;">Waste: ${layout.waste_percent}%</span>
+          `;
+
+          container.innerHTML = layout.svg;
+        }
+
+        if (keys.length > 0) render(keys[0]);
+        select.onchange = (e) => render(e.target.value);
+      } catch (err) {
+        document.getElementById('svgContainer').innerHTML = '<p style="color:#ef4444;">Error loading nesting layout: ' + err + '</p>';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadNesting);
+  </script>
+</body>
+</html>

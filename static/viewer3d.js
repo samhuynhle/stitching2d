@@ -416,27 +416,35 @@ function buildChalkBucket3D(project, group) {
     flapMesh.userData = { pieceId: "front_pocket_flap" };
     group.add(flapMesh);
 
-    // 6. FRONT 1-INCH UPWARD-FOLDING MAGNETIC BOTTOM STASH FLAP
-    const bFlapGeo = new THREE.BoxGeometry(baseW, 1.1, 0.18);
+    // 6. FRONT 2-INCH UPWARD-FOLDING MAGNETIC BOTTOM STASH FLAP & ELASTIC HINGE
+    const bFlapGeo = new THREE.BoxGeometry(baseW, 2.1, 0.18);
     const bFlapMesh = new THREE.Mesh(bFlapGeo, createCorduraMat());
-    bFlapMesh.position.set(0, 0.55, halfBD + 0.08);
+    bFlapMesh.position.set(0, 1.05, halfBD + 0.08);
     bFlapMesh.userData = { pieceId: "basement_floor_panel" };
     group.add(bFlapMesh);
 
-    // 3x N52 Basement Magnets on Flap
+    // 1in Elastic Snap-Back Hinge Indicator (bottom crease)
+    const bHingeGeo = new THREE.BoxGeometry(8.0, 0.3, 0.05);
+    const bHingeMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.8 });
+    const bHingeMesh = new THREE.Mesh(bHingeGeo, bHingeMat);
+    bHingeMesh.position.set(0, 0.15, halfBD + 0.15);
+    bHingeMesh.userData = { pieceId: "basement_floor_panel" };
+    group.add(bHingeMesh);
+
+    // 3x N52 Basement Magnets on 2in Flap Top Hem
     for (let xPos of [-3.5, 0.0, 3.5]) {
       const bMagGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.1, 16);
       bMagGeo.rotateX(Math.PI / 2);
       const bMag = new THREE.Mesh(bMagGeo, magnetMat);
-      bMag.position.set(xPos, 0.7, halfBD + 0.18);
+      bMag.position.set(xPos, 1.65, halfBD + 0.18);
       bMag.userData = { pieceId: "basement_floor_panel" };
       group.add(bMag);
     }
 
-    // Basement Flap Quick-Pull Tab
-    const bTabGeo = new THREE.BoxGeometry(0.75, 0.6, 0.1);
+    // Basement Flap Quick-Pull Tab (Centered at top of 2in flap)
+    const bTabGeo = new THREE.BoxGeometry(0.75, 0.7, 0.1);
     const bTab = new THREE.Mesh(bTabGeo, webbingMat);
-    bTab.position.set(0, 1.25, halfBD + 0.1);
+    bTab.position.set(0, 2.2, halfBD + 0.1);
     bTab.userData = { pieceId: "basement_floor_panel" };
     group.add(bTab);
 

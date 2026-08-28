@@ -1,8 +1,8 @@
 {
   "id": "bouldering_chalk_bucket_pro",
-  "name": "BoulderPro Magnetic Chalk Bucket + 1in Basement Stash",
-  "version": "7.0.0",
-  "description": "100% Zipper-Free bouldering chalk bucket featuring an integrated 1-inch bottom basement stash compartment (10.5in × 8in × 1in). The bottom compartment opens via a front upward-folding magnetic storm flap (3 pairs of N52 magnets) for phone, tape, and finger care tools. Main chalk bowl features continuous U-cradle with zero bottom seams, Ultrasuede magnetic rim, and 70D ripstop anti-puff baffles.",
+  "name": "BoulderPro Magnetic Chalk Bucket (Unified Basement Access)",
+  "version": "8.0.0",
+  "description": "100% Zipper-Free unified bouldering chalk bucket (continuous U-panel cradle, 10.5in × 8in base tapering to an 8.5in × 6in opening). Features a unified deep interior with a 1-inch front upward-folding bottom magnetic access flap (3 pairs of N52 magnets), plush high-loft fleece lining, Ultrasuede magnetic rim gasket, 70D ripstop aerodynamic anti-puff baffles, front 3D magnetic pocket, and rear mesh sleeve.",
   "units": "in",
   "fabrics": [
     {
@@ -290,28 +290,6 @@
       ]
     },
     {
-      "id": "basement_divider_shelf",
-      "name": "Internal Intermediate Shelf Divider (10.5in × 8in)",
-      "category": "main_body",
-      "fabric_id": "cordura_1000d",
-      "quantity": 1,
-      "mirror": false,
-      "default_seam_allowance": 0.5,
-      "vertices": [
-        {"x": 0.0, "y": 0.0},
-        {"x": 10.5, "y": 0.0},
-        {"x": 10.5, "y": 8.0},
-        {"x": 0.0, "y": 8.0}
-      ],
-      "grainline": {
-        "start_point": {"x": 5.25, "y": 1.0},
-        "end_point": {"x": 5.25, "y": 7.0},
-        "angle_deg": 0.0,
-        "directional": false
-      },
-      "attachments": []
-    },
-    {
       "id": "front_3d_pocket",
       "name": "Front 3D Magnetic Bellows Pocket Body (X-Pac)",
       "category": "pocket",
@@ -506,16 +484,16 @@
       "vertices": [
         {"x": 1.0, "y": 0.0},
         {"x": 9.5, "y": 0.0},
-        {"x": 10.5, "y": 10.0},
-        {"x": 10.5, "y": 18.0},
-        {"x": 9.5, "y": 28.0},
-        {"x": 1.0, "y": 28.0},
-        {"x": 0.0, "y": 18.0},
-        {"x": 0.0, "y": 10.0}
+        {"x": 10.5, "y": 11.0},
+        {"x": 10.5, "y": 19.0},
+        {"x": 9.5, "y": 30.0},
+        {"x": 1.0, "y": 30.0},
+        {"x": 0.0, "y": 19.0},
+        {"x": 0.0, "y": 11.0}
       ],
       "grainline": {
         "start_point": {"x": 5.25, "y": 2.0},
-        "end_point": {"x": 5.25, "y": 26.0},
+        "end_point": {"x": 5.25, "y": 28.0},
         "angle_deg": 0.0,
         "directional": true
       },
@@ -532,12 +510,12 @@
       "vertices": [
         {"x": 0.0, "y": 0.0},
         {"x": 8.0, "y": 0.0},
-        {"x": 7.0, "y": 10.0},
-        {"x": 1.0, "y": 10.0}
+        {"x": 7.0, "y": 11.0},
+        {"x": 1.0, "y": 11.0}
       ],
       "grainline": {
         "start_point": {"x": 4.0, "y": 1.0},
-        "end_point": {"x": 4.0, "y": 9.0},
+        "end_point": {"x": 4.0, "y": 10.0},
         "angle_deg": 0.0,
         "directional": true
       },
@@ -557,7 +535,7 @@
       "name": "N52 Basement Flap Disc Magnets (15mm × 1.5mm)",
       "type": "Magnets",
       "quantity": 6,
-      "notes": "3 pairs for front 1in upward-folding bottom stash slot"
+      "notes": "3 pairs for front 1in upward-folding bottom magnetic access slot"
     },
     {
       "id": "hw_pocket_magnets",
@@ -584,13 +562,12 @@
   "sewing_notes": [
     "1. U-Panel Prep: Mark fold guidelines on 1000D Cordura U-Panel. Encase 3 receiver magnets along the front fold line for the basement flap. Stitch Grab Handles, Pull Tabs, and Roll-Top Webbing Straps.",
     "2. Basement Floor Assembly: Encase 3 matching N52 magnets inside the 1in upward flap of the Basement Floor panel; bartack the quick-pull tab. Stitch floor panel to side gusset lower risers.",
-    "3. Internal Shelf Divider: Stitch the 10.5in × 8in intermediate divider panel horizontally 1in above the basement floor to create the separated gear chamber.",
-    "4. Pocket Construction: Stitch 2 magnets into Front 3D Pocket rim and 2 matching magnets in Front Flap. Stitch pocket to Front U-Panel section; install rear mesh pocket with center magnetic snap.",
-    "5. Side Gussets: Bartack brush sleeves to Left Gusset and D-Ring to Right Gusset.",
-    "6. Shell Assembly: Pin Left and Right Gussets along the continuous side perimeter of the U-Panel and stitch with 1/2in SA.",
-    "7. Ultrasuede Gasket: Encapsulate 4 pairs of 18mm N52 magnets inside the two Ultrasuede Rim Gasket bands.",
-    "8. Anti-Puff Baffles: Hem 70D Ripstop Baffles and baste 1in below Ultrasuede rim.",
-    "9. Fleece Lining Assembly: Stitch Fleece U-Panel to Fleece Gussets leaving a 4in turning opening along one side seam.",
-    "10. Final Perimeter Join: Sandwich exterior Ultrasuede collar, anti-puff baffles, and fleece lining around top perimeter; topstitch with 1/4in margin."
+    "3. Pocket Construction: Stitch 2 magnets into Front 3D Pocket rim and 2 matching magnets in Front Flap. Stitch pocket to Front U-Panel section; install rear mesh pocket with center magnetic snap.",
+    "4. Side Gussets: Bartack brush sleeves to Left Gusset and D-Ring to Right Gusset.",
+    "5. Shell Assembly: Pin Left and Right Gussets along the continuous side perimeter of the U-Panel and stitch with 1/2in SA.",
+    "6. Ultrasuede Gasket: Encapsulate 4 pairs of 18mm N52 magnets inside the two Ultrasuede Rim Gasket bands.",
+    "7. Anti-Puff Baffles: Hem 70D Ripstop Baffles and baste 1in below Ultrasuede rim.",
+    "8. Fleece Lining Assembly: Stitch Fleece U-Panel to Fleece Gussets leaving a 4in turning opening along one side seam (deep unified interior cavity).",
+    "9. Final Perimeter Join: Sandwich exterior Ultrasuede collar, anti-puff baffles, and fleece lining around top perimeter; topstitch with 1/4in margin."
   ]
 }

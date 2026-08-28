@@ -416,16 +416,7 @@ function buildChalkBucket3D(project, group) {
     flapMesh.userData = { pieceId: "front_pocket_flap" };
     group.add(flapMesh);
 
-    // 6. 1-INCH BOTTOM BASEMENT STASH COMPARTMENT & UPWARD MAGNETIC FLAP
-    // Internal Shelf Divider (Separates upper chalk bowl from lower stash)
-    const shelfGeo = new THREE.PlaneGeometry(baseW, baseD);
-    const shelfMesh = new THREE.Mesh(shelfGeo, createCorduraMat());
-    shelfMesh.rotation.x = -Math.PI / 2;
-    shelfMesh.position.set(0, 1.0, 0);
-    shelfMesh.userData = { pieceId: "basement_divider_shelf" };
-    group.add(shelfMesh);
-
-    // Front Upward-Folding Magnetic Storm Flap (1in rise from bottom)
+    // 6. FRONT 1-INCH UPWARD-FOLDING MAGNETIC BOTTOM STASH FLAP
     const bFlapGeo = new THREE.BoxGeometry(baseW, 1.1, 0.18);
     const bFlapMesh = new THREE.Mesh(bFlapGeo, createCorduraMat());
     bFlapMesh.position.set(0, 0.55, halfBD + 0.08);

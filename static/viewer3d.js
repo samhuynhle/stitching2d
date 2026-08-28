@@ -514,37 +514,41 @@ function buildChalkBucket3D(project, group) {
       group.add(bDock);
     }
 
-    // D. Detailing Boar's Hair Brush (Small)
+    // D. Inverted Brushes (Tails with lanyard holes at TOP near carabiner loop, bristles DOWN)
     const brushWoodMat = new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.6 });
     const brushBristleMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.9 });
     const brushSteelTailMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.95, roughness: 0.2 });
 
-    // Brush 1 (Small Boar's Hair)
-    const brushHandle1 = new THREE.Mesh(new THREE.BoxGeometry(0.35, 6.8, 0.22), brushWoodMat);
-    brushHandle1.position.set(-halfBW + 0.35, 6.5, 1.2);
+    // Brush 1 (Small Boar's Hair — Inverted)
+    const brushHandle1 = new THREE.Mesh(new THREE.BoxGeometry(0.35, 6.5, 0.22), brushWoodMat);
+    brushHandle1.position.set(-halfBW + 0.35, 6.0, 1.2);
     brushHandle1.rotation.z = -0.04;
     group.add(brushHandle1);
 
-    const brushTail1 = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.4, 12), brushSteelTailMat);
-    brushTail1.position.set(-halfBW + 0.35, 3.2, 1.2);
+    // Tail + Lanyard Ring at TOP (y = 8.8)
+    const brushTail1 = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.5, 12), brushSteelTailMat);
+    brushTail1.position.set(-halfBW + 0.35, 8.8, 1.2);
     group.add(brushTail1);
 
-    const brushHead1 = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.8, 0.4), brushBristleMat);
-    brushHead1.position.set(-halfBW + 0.35, 9.8, 1.2);
+    // Bristle Head pointing DOWN (y = 3.0)
+    const brushHead1 = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.6, 0.4), brushBristleMat);
+    brushHead1.position.set(-halfBW + 0.35, 3.0, 1.2);
     group.add(brushHead1);
 
-    // Brush 2 (Large Boulder Crimp Brush)
-    const brushHandle2 = new THREE.Mesh(new THREE.BoxGeometry(0.5, 7.5, 0.3), brushWoodMat);
-    brushHandle2.position.set(-halfBW + 0.35, 6.8, -1.2);
+    // Brush 2 (Large Boulder Crimp Brush — Inverted)
+    const brushHandle2 = new THREE.Mesh(new THREE.BoxGeometry(0.5, 7.0, 0.3), brushWoodMat);
+    brushHandle2.position.set(-halfBW + 0.35, 6.0, -1.2);
     brushHandle2.rotation.z = -0.04;
     group.add(brushHandle2);
 
+    // Tail + Lanyard Ring at TOP (y = 9.0)
     const brushTail2 = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 0.5, 12), brushSteelTailMat);
-    brushTail2.position.set(-halfBW + 0.35, 3.2, -1.2);
+    brushTail2.position.set(-halfBW + 0.35, 9.0, -1.2);
     group.add(brushTail2);
 
-    const brushHead2 = new THREE.Mesh(new THREE.BoxGeometry(0.75, 2.2, 0.55), brushBristleMat);
-    brushHead2.position.set(-halfBW + 0.35, 10.4, -1.2);
+    // Bristle Head pointing DOWN (y = 2.8)
+    const brushHead2 = new THREE.Mesh(new THREE.BoxGeometry(0.75, 2.0, 0.55), brushBristleMat);
+    brushHead2.position.set(-halfBW + 0.35, 2.8, -1.2);
     group.add(brushHead2);
 
     // E. Right Gusset D-Ring Key Clip Loop
